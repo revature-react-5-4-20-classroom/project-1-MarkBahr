@@ -1,26 +1,27 @@
 import React from 'react';
-import { prependOnceListener } from 'cluster';
-import { stringify } from 'querystring';
+import { Table } from './Table';
+// import { stringify } from 'querystring';
 
-
-interface IUserTableProps {
-    name: string;
+/*
+interface IUserTableState {
+    tableRows: number[];
 }
 
 // To pass things in teh constructor, it helps to have an interface. 
 // the Generics use the interface, but they don't implement it. 
-export class UserTable extends React.Component<IUserTableProps> {
+export class UserTable extends React.Component<any, IUserTableState> {
     
-    constructor(props: IUserTableProps) {
+    constructor(props: any) {
         super(props);
         this.state = {
-            name: "Your Name"
-            
-        }
+            tableRows: []  
+        };
     }
     
-    myTeam = (name: string) => {
-    return <h2>{this.props.name} is on your team!</h2>
+    addNumberRow = () => {
+        this.setState({
+            tableRows : this.setState.tableRows.slice().concat(Math.random())
+        })
     }
 
 
@@ -28,21 +29,56 @@ export class UserTable extends React.Component<IUserTableProps> {
         
         return ( 
             
-            <div>
-                <h1>Who is on your team?</h1>
-                <p>{this.myTeam("Bob")}</p>
-                <p>{this.myTeam("Jacob")}</p>
-                <p>{this.myTeam("Javier")}</p>
-                <p>{this.myTeam("Jason")}</p>
-                <p>{this.myTeam("Sandra")}</p>
-            </div>
+            <>
+                <h1>User Table</h1>
+                <Table rows={this.state.tableRows}/>
+                <button onClick={this.addNumberRow}>Add Random Number</button>
+            </>
             
         );
     }
+}*/
+
+interface IUserTableState {
+    size: number[];
 }
 
 
+export default class UserTable extends React.Component<IUserTableState> {
+    constructor(props: any){
+      super(props);
+      this.state = {
+          size: []
+      }
+    }
+    render(){
+      let rows = [];
+      for (var i = 0; i < this.state.size; i++){
+        let rowID = `row${i}`
+        let cell = []
+        for (var idx = 0; idx < this.state.size; idx++){
+          let cellID = `cell${i}-${idx}`
+          cell.push(<td key={cellID} id={cellID}></td>)
+        }
+        rows.push(<tr key={i} id={rowID}>{cell}</tr>)
+      }
+      return(
+        <div className="container">
+          <div className="row">
+            <div className="col s12 board">
+              <table id="simple-board">
+                 <tbody>
+                   {rows}
+                 </tbody>
+               </table>
+            </div>
+          </div>
+        </div>
+      )
+    }
+}
 
+// If I'm travelling, some of the time I'd be able to access data. Other times I could take calls. 
 
 
 

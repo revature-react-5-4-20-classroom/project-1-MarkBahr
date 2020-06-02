@@ -4,20 +4,20 @@ firstName, lastName, email, and role.
 import { Role } from './Role';
 
 export class User {
-    user_id : number; // primary key
+    userId : number; // primary key
     username: string; // not null
     password: string; // not null
-    first_name: string; // not null
-    last_name: string; // not null
+    firstName: string; // not null
+    lastName: string; // not null
     email: string; // not null
-    role: number; // not null
+    role: Role; // not null
     
-    constructor(user_id:number, username:string, password:string, first_name:string, last_name:string, email:string, role:number) {
-        this.user_id = user_id;
+    constructor(userId:number, username:string, password:string, firstName:string, lastName:string, email:string, role:Role) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.role = role;
     }
