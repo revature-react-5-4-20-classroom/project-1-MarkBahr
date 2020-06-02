@@ -21,5 +21,4 @@ export class Table extends React.Component<ITableProps> {
       </table>
     );
   }
-
 }

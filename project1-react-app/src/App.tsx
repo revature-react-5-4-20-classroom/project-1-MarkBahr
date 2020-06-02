@@ -6,8 +6,9 @@ import { NavbarComponent } from './components/NavbarComponent';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { User } from './models/User';
 import { LoginComponent } from './components/LoginComponent';
-import Practice from './components/PracticeComponent';
+// import Practice from './components/PracticeComponent';
 // import { Example } from './components/NavReactstrap';
+//import ../nodemodule/ (look at reactstrap docs)
 
 interface IAppState {
   loggedInUser: User | null;
@@ -36,21 +37,17 @@ export class App extends React.Component<any, IAppState> {
       <NavbarComponent/>
       <h1>Welcome to Expense Reimbursements System! (ERS)</h1>
       <Switch>
-      <Route path='/users'>
+        <Route path='/users'>
           <UserTable />
         </Route>
         <Route path='/reimbursements'>
         <ReimburseComp reimbursement="If you have questions about submitting reimbursements, please contact the finance department: finance.dept@reimbursement.com"/>
         </Route>
-        <Route path="/login">
+        <Route path="/login" render={(props)=>{return <LoginComponent updateUser={this.updateUser} {...props} />}} />
           <p>This is where you login!</p>
-           <LoginComponent updateUser={this.updateUser} />
-        </Route>
       </Switch>
     </Router>
     
-    
-    <Practice />
     </>
     );
   }

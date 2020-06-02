@@ -7,6 +7,8 @@ import { login } from '../api/ExpenseClient';
 // it will match updateUser in App.
 interface ILoginComponentProps {
   updateUser: (user:User) => void;
+  history: any;
+  match: any;
 }
 
 interface ILoginComponentState {
@@ -99,5 +101,4 @@ export class LoginComponent extends React.Component<ILoginComponentProps, ILogin
       </div>
     );
   }
-
 }

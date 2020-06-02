@@ -1,48 +1,51 @@
 import React from 'react';
 import { Table } from './Table';
-// import { stringify } from 'querystring';
 
-/*
 interface IUserTableState {
-    tableRows: number[];
+  tableRows: number[];
 }
 
-// To pass things in teh constructor, it helps to have an interface. 
-// the Generics use the interface, but they don't implement it. 
+/** 
+ * Includes a button and a QuickTable.  Appends rows to the QuickTable
+ * When the button is clicked.
+ */
 export class UserTable extends React.Component<any, IUserTableState> {
-    
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            tableRows: []  
-        };
-    }
-    
-    addNumberRow = () => {
-        this.setState({
-            tableRows : this.setState.tableRows.slice().concat(Math.random())
-        })
-    }
 
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      tableRows: []
+    };
+  }
 
-    render() {
-        
-        return ( 
-            
-            <>
-                <h1>User Table</h1>
-                <Table rows={this.state.tableRows}/>
-                <button onClick={this.addNumberRow}>Add Random Number</button>
-            </>
-            
-        );
-    }
-}*/
+  /** Adds a number to the array tableRows */
+  addNumberRow = () => {
+    // We always want to use setState to modify state
+    this.setState({
+      // We want to keep our data immutable, so we don't modify tableRows in place
+      // instead we copy it, modify the copy, and set the copy as the state.
+      // this.state.tableRows.slice() is a copy of this.state.tableRows
+      // concat(Math.random()) adds a random number to the array
+      tableRows : this.state.tableRows.slice().concat(Math.random())
+    });
+  }
+
+  render() {
+    return (
+      <>
+        <Table rows={this.state.tableRows} />
+        <button onClick={this.addNumberRow}>Add Random Number</button>
+      </>
+    )
+  }
+
+}
+
+/*
 
 interface IUserTableState {
     size: number[];
 }
-
 
 export default class UserTable extends React.Component<IUserTableState> {
     constructor(props: any){
@@ -78,9 +81,7 @@ export default class UserTable extends React.Component<IUserTableState> {
     }
 }
 
-// If I'm travelling, some of the time I'd be able to access data. Other times I could take calls. 
-
-
+*/
 
 /*
 class UserTable extends React.Component<UserTableProps> {
@@ -153,30 +154,31 @@ function Cell(props) {
 export class UserTable extends React.Component  {
     renderTable() {
         return (
-            <table>
-                <caption>Users Table</caption>
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>E-mail</th>
-                        <th>Role</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>tWalker2</td>
-                        <td>123password</td>
-                        <td>Thomas</td>
-                        <td>Walker</td>
-                        <td>twalker@gmail.com</td>
-                        <td>Finance Manager</td>
-                    </tr>
-                </thead>
-                
-            </table>
+            <form>
+                <table>
+                    <caption>Users Table</caption>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>E-mail</th>
+                            <th>Role</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>tWalker2</td>
+                            <td>123password</td>
+                            <td>Thomas</td>
+                            <td>Walker</td>
+                            <td>twalker@gmail.com</td>
+                            <td>Finance Manager</td>
+                     </tr>
+                    </thead>
+                </table>
+            </form>
         )
     }
 }

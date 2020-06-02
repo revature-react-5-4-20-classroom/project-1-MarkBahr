@@ -15,24 +15,24 @@ export async function getAllReimbursements() : Promise<Reimbursement[]> {
     const response = await libraryClient.get('/reimbursements');
     // we're going to get an array back if we hit the url listed above. w/ /books
     return response.data.map((reimbursementObj: any) => {
-        const {id, author, amount, dateSubmitted, dateResolved, description, resolver, status, reimbursementType} = reimbursementObj;
-        return new Reimbursement(id, author, amount, dateSubmitted, dateResolved, description, resolver, status, reimbursementType);
+        const {id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type} = reimbursementObj;
+        return new Reimbursement(id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type);
     })  
 }
 
 export async function getAllUsers() : Promise<User[]> {
     const response = await libraryClient.get('/users');
     return response.data.map((userObj: any) => {
-        const {userId, username, password, firstName, lastName, email, role} = userObj;
-        return new User(userId, username, password, firstName, lastName, email, role);
+        const {user_id, username, password, first_name, last_name, email, role} = userObj;
+        return new User(user_id, username, password, first_name, last_name, email, role);
     });
 }
 
 export async function login(un: string, pw: string) {
     try {
         const response = await libraryClient.post('/login', {username: un, password: pw});
-        const {userId, username, password, firstName, lastName, email, role} = response.data;
-        return new User(userId, username, password, firstName, lastName, email, role);
+        const {user_id, username, password, first_name, last_name, email, role} = response.data;
+        return new User(user_id, username, password, first_name, last_name, email, role);
     } catch (e) {
         if(e.resopnse.status === 401) {
             throw new FailedLogin('Failed to authenticate', un);
