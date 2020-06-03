@@ -1,11 +1,14 @@
 import React from 'react';
-import './App.css';
 import { UserTable } from './components/UserTable';
 import { ReimburseComp } from './components/ReimburseComp';
 import { NavbarComponent } from './components/NavbarComponent';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { User } from './models/User';
 import { LoginComponent } from './components/LoginComponent';
+import { Redirect } from "react-router-dom"; 
+import { toast, ToastContainer} from 'react-toastify';
+import './index.css';
+// import { Jumbotron } from 'react-strap';
 // import Practice from './components/PracticeComponent';
 // import { Example } from './components/NavReactstrap';
 //import ../nodemodule/ (look at reactstrap docs)
@@ -20,35 +23,83 @@ export class App extends React.Component<any, IAppState> {
     super(props);
     this.state = {
       loggedInUser: null,
-    }
+    };
   }
 
-  updateUser = (user:User) => {
+  updateLoggedInUser = (user:User) => {
     this.setState({
       loggedInUser: user,
-    })
-  }
+    });
+  };
+
+  logoutUser = () => {
+    this.setState({
+      loggedInUser: null,
+    });
+  };
 
   render() {
     // const aMessage = 'My variable message';
     return (
-    <>
-    <Router>
-      <NavbarComponent/>
-      <h1>Welcome to Expense Reimbursements System! (ERS)</h1>
-      <Switch>
-        <Route path='/users'>
-          <UserTable />
-        </Route>
-        <Route path='/reimbursements'>
-        <ReimburseComp reimbursement="If you have questions about submitting reimbursements, please contact the finance department: finance.dept@reimbursement.com"/>
-        </Route>
-        <Route path="/login" render={(props)=>{return <LoginComponent updateUser={this.updateUser} {...props} />}} />
-          <p>This is where you login!</p>
-      </Switch>
-    </Router>
-    
-    </>
+      <div className="App">
+        <Router>
+          <NavbarComponent
+            logoutUser={this.logoutUser}
+            loggedInUser={this.state.loggedInUser}
+          />
+            <h1>Welcome to Expense Reimbursements System! (ERS)</h1>
+          <Switch>
+            {/* This Route redirects people hitting the root url to either home or login, just a QoL thing */}
+            <Route exact path="/">
+              {this.state.loggedInUser ? (
+                <Redirect to="/home" />
+              ) : (
+                <Redirect to="/login" />
+              )}
+            </Route>
+            {/* This is a Route to a login form */}
+            <Route
+              path="/login"
+              render={(props: any) => {
+                return (
+                  <LoginComponent {...props} updateUser={this.updateLoggedInUser} />
+                );
+              }}
+            />
+            {/* This route is just a placeholder for a homepage */}
+            <Route path="/home">
+              <h2>
+                Welcome{" "}
+                {this.state.loggedInUser
+                  ? `home, ${this.state.loggedInUser.username}!`
+                  : "guest!"}
+              </h2>
+            </Route>
+              {/* Private route for users to view their own info */}
+            <Route path='/users'>
+              <UserTable loggedInUser={this.state.loggedInUser} />
+            </Route>
+            {/* This is a Route to a private users page, only accessible by Admins */}
+            <Route path="/users">
+              {(this.state.loggedInUser && this.state.loggedInUser.role === 1) ? <UserTable /> : <h4>Only admins can see all users</h4>}
+            </Route>
+            <Route path='/reimbursements'>
+              <ReimburseComp reimbursement="If you have questions about submitting reimbursements, please contact the finance department: finance.dept@reimbursement.com"/>
+            </Route>
+            {/* This is a catchall route that redirects the user if they enter a route we dont have */}
+            <Route
+              path="*"
+              render={(props: any) => {
+                toast(`No route found for ${props.location.pathname}`);
+                return <Redirect to="/" />;
+              }}
+            ></Route>
+            </Switch>
+        </Router>
+        <ToastContainer /> 
+      </div>
     );
   }
 }
+
+// <Redirect to='/homepage' {...props} />

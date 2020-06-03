@@ -1,24 +1,28 @@
 import React from 'react';
-import { Navbar, Nav, NavItem } from 'reactstrap';
+import { Nav, NavItem, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import { User } from '../models/User';
 
-export class NavbarComponent extends React.Component<any,any> {
+interface INavbarComponent {
+  logoutUser: ()=>void;
+  loggedInUser: User | null
+}
+
+export class NavbarComponent extends React.Component<INavbarComponent> {
     render() {
       return (
-      <div>
-        {/* just writing the name of a prop is shorthand for prop={true}*/}
-        <Navbar color="light" light expand="md">
-          <Nav className="mr-auto" navbar>
-            <NavItem>
-              <NavLink to="/homepage">Home</NavLink>
-              <NavLink to="/users">Users</NavLink>
-              <NavLink to="/reimbursements">Reimbursements</NavLink>
-              <NavLink to="/login">Login</NavLink>
-            </NavItem>
-          </Nav>
-  
-        </Navbar>
-      </div>
+      <Nav>
+        <NavItem>
+          <NavLink to="/home" className="nav-link" activeClassName="active">Home</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink hidden={!!this.props.loggedInUser} to="/login" className="nav-link" activeClassName="active">Login</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/users" className="nav-link" activeClassName="active">All Users</NavLink>
+        </NavItem>
+        <NavItem tag={()=>{return <Button  hidden={!this.props.loggedInUser} onClick={this.props.logoutUser} color="secondary" outline>Logout</Button>}} />
+      </Nav>
       )
     }
 }

@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -17,7 +18,7 @@ body {
   }
 
 /* Navbar container */
-.navbar {
+.nav {
 	overflow: hidden;
 	background-color: #333;
 	font-family: Arial;
@@ -26,14 +27,13 @@ body {
 }
 
 /* Links inside Mark's navbar */
-.navbar a {
+.nav a {
 	float: left;
 	font-size: 18px;
 	color: white;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
-	
 }
 
 /* The dropdown containers
@@ -55,7 +55,7 @@ body {
 }
 
 /* Add a blue background color to navbar links on hover */
-.navbar a:hover, .dropdown:hover .dropbtn {
+.nav a:hover, .dropdown:hover .dropbtn {
   display: inline-block;
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);

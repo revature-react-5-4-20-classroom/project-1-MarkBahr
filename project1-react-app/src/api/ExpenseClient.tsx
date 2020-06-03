@@ -20,6 +20,26 @@ export async function getAllReimbursements() : Promise<Reimbursement[]> {
     })  
 }
 
+// post new reimbursement
+export async function postNewReimbursement(r: Reimbursement): Promise<any> {
+    try {
+      //The backend doesn't really support this method, it just fakes it
+      const response = await libraryClient.post("/books", {
+        id: 0,
+        title: r.author,
+        amount: r.amount,
+        date_submitted: r.date_submitted,
+        date_resolved: r.date_resolved,
+        description: r.description,
+        resolver: r.resolver,
+        status: r.status,
+        reimbursement_type: r.reimbursement_type
+      });
+    } catch (e) {
+      throw e;
+    }
+}
+
 export async function getAllUsers() : Promise<User[]> {
     const response = await libraryClient.get('/users');
     return response.data.map((userObj: any) => {
@@ -35,12 +55,12 @@ export async function login(un: string, pw: string) {
         return new User(user_id, username, password, first_name, last_name, email, role);
     } catch (e) {
         if(e.resopnse.status === 401) {
-            throw new FailedLogin('Failed to authenticate', un);
+            throw new FailedLogin(`Failed to authenticate with username ${un}`);
         } else {
         // We can only send info to the user via alerts or console, since we can't commmunicate with the Dom directly
         // So, we need to throw another error here, just might be a diff one. 
-        throw e;
-    }
+        throw new Error("There was a problem logging in.");
+        }
     }
 }
 /* The pattern above will serve you well on project 1
