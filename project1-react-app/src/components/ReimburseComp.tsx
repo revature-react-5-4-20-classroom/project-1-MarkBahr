@@ -1,30 +1,61 @@
-import React from 'react';
-// import { prependOnceListener } from 'cluster';
-// import { stringify } from 'querystring';
+import React from "react";
+import { Container, Row, Col, Spinner } from "reactstrap";
+import { MyTable } from "./MyTable";
+import { getAllReimbursements } from "../api/ExpenseClient";
+import { toast } from "react-toastify";
+import { Reimbursement } from "../models/Reimbursement";
+import { NewReimbForm } from "./NewReimbForm";
 
-
-interface IReimburseCompProps {
-    reimbursement: string;
+interface IBookPageState {
+  reimbursements: Reimbursement[];
+  reimbursementsLoaded: boolean;
 }
 
-export class ReimburseComp extends React.Component<IReimburseCompProps> {
-    /*
-    constructor(props: IUserTableProps) {
-        super(props);
-        this.state = {
-            name: string;
-        }
-    }
-    
-    printString = () => {
-        this.setState({voterId : this.state.voterId + 1})
-    }
-    */
-    render() {
-        
-        return ( 
-            <p>Submit Reimbursements?: {this.props.reimbursement}</p>
-            
-        );
-    }
+export class ReimburseComp extends React.Component<any, IBookPageState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      reimbursements: [],
+      reimbursementsLoaded: false,
+    };
+  }
+
+  async componentDidMount() {
+    await this.fetchReimbursements();
+  }
+
+  addNewReimbursement = async () => {
+    await this.fetchReimbursements();
+  }
+
+  fetchReimbursements = async () => {
+    try {
+      this.setState({
+        reimbursements: await getAllReimbursements(),
+        reimbursementsLoaded: true,
+      });
+      } catch (e) {
+          toast(e.message, {type:"error"});
+      }
+  }
+
+  render() {
+    return (
+      <Container>
+        <Row>
+          <Col md={{ size: 8 }}>
+            <h4>Reimbursements</h4>
+            {this.state.reimbursementsLoaded ? (
+              <MyTable objects={this.state.reimbursements} />
+            ) : (
+              <Spinner />
+            )}
+          </Col>
+          <Col md={{size: 4}}>
+            {this.props.loggedInUser ? <NewReimbForm addReimbursement={this.addNewReimbursement} /> : <h4>Must login to add reimbursements</h4>}
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 }

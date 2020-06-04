@@ -1,44 +1,46 @@
 import React from 'react';
-import { Table } from './Table';
+import { MyTable } from './MyTable';
+import { Container, Row, Col, Spinner } from "reactstrap";
+import { toast } from "react-toastify";
+import { getAllUsers } from "../api/ExpenseClient";
 
-interface IUserTableState {
-  tableRows: number[];
-}
 
-/** 
- * Includes a button and a QuickTable.  Appends rows to the QuickTable
- * When the button is clicked.
- */
-export class UserTable extends React.Component<any, IUserTableState> {
-
+export class UserTable extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      tableRows: []
+      users: [],
+      usersLoaded: false,
     };
   }
 
-  /** Adds a number to the array tableRows */
-  addNumberRow = () => {
-    // We always want to use setState to modify state
-    this.setState({
-      // We want to keep our data immutable, so we don't modify tableRows in place
-      // instead we copy it, modify the copy, and set the copy as the state.
-      // this.state.tableRows.slice() is a copy of this.state.tableRows
-      // concat(Math.random()) adds a random number to the array
-      tableRows : this.state.tableRows.slice().concat(Math.random())
-    });
+  async componentDidMount() {
+    try {
+  this.setState({
+    users: await getAllUsers(),
+    usersLoaded: true,
+  });
+  } catch (e) {
+      toast(e.message, {type:"error"});
   }
+}
 
-  render() {
-    return (
-      <>
-        <Table rows={this.state.tableRows} />
-        <button onClick={this.addNumberRow}>Add Random Number</button>
-      </>
-    )
-  }
-
+render() {
+  return (
+    <Container>
+      <Row>
+        <Col md={{ size: 5 }}>
+          <h4>Users</h4>
+          {this.state.usersLoaded ? (
+            <MyTable objects={this.state.users} />
+          ) : (
+            <Spinner />
+          )}
+        </Col>
+      </Row>
+    </Container>
+  );
+}
 }
 
 /*

@@ -9,7 +9,6 @@ import { Redirect } from "react-router-dom";
 import { toast, ToastContainer} from 'react-toastify';
 import './index.css';
 // import { Jumbotron } from 'react-strap';
-// import Practice from './components/PracticeComponent';
 // import { Example } from './components/NavReactstrap';
 //import ../nodemodule/ (look at reactstrap docs)
 

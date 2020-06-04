@@ -19,7 +19,10 @@ export class NavbarComponent extends React.Component<INavbarComponent> {
           <NavLink hidden={!!this.props.loggedInUser} to="/login" className="nav-link" activeClassName="active">Login</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/users" className="nav-link" activeClassName="active">All Users</NavLink>
+          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/users" className="nav-link" activeClassName="active">All Employees</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements" className="nav-link" activeClassName="active">Reimbursements</NavLink>
         </NavItem>
         <NavItem tag={()=>{return <Button  hidden={!this.props.loggedInUser} onClick={this.props.logoutUser} color="secondary" outline>Logout</Button>}} />
       </Nav>

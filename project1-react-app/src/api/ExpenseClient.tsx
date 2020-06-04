@@ -20,11 +20,13 @@ export async function getAllReimbursements() : Promise<Reimbursement[]> {
     })  
 }
 
+
+
 // post new reimbursement
 export async function postNewReimbursement(r: Reimbursement): Promise<any> {
     try {
-      //The backend doesn't really support this method, it just fakes it
-      const response = await libraryClient.post("/books", {
+      
+      const response = await libraryClient.post("/reimbursements", {
         id: 0,
         title: r.author,
         amount: r.amount,
