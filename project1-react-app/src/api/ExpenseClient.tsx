@@ -3,7 +3,7 @@ import { User } from '../models/User';
 import { Reimbursement } from '../models/Reimbursement';
 import { FailedLogin } from '../errors/FailedLogin';
 
-const libraryClient = axios.create({
+const expenseClient = axios.create({
     baseURL: 'http://3.235.223.124:2400',
     // if you don't have the following line, your Login won't work!
     withCredentials: true, // If you have this line, you'll be fine. 
@@ -12,21 +12,28 @@ const libraryClient = axios.create({
 // Library-express is running on my EC2 with public IP 3.235.223.124
 // Promise<void> works too with no return type. 
 export async function getAllReimbursements() : Promise<Reimbursement[]> {
-    const response = await libraryClient.get('/reimbursements');
+    const response = await expenseClient.get('/reimbursements');
     // we're going to get an array back if we hit the url listed above. w/ /books
     return response.data.map((reimbursementObj: any) => {
         const {id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type} = reimbursementObj;
         return new Reimbursement(id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type);
     })  
 }
-
-
+ 
+export async function getReimbursementByUser(user_id: number) : Promise<Reimbursement[]> {
+    const response = await expenseClient.get(`/reimbursements/author/userId/${user_id}`);
+    // Get an array of reimbursement info back
+    return response.data.map((reimbursementObj: any) => {
+        const {id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type} = reimbursementObj;
+        return new Reimbursement(id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type);
+    })
+}
 
 // post new reimbursement
 export async function postNewReimbursement(r: Reimbursement): Promise<any> {
     try {
       
-      const response = await libraryClient.post("/reimbursements", {
+      const response = await expenseClient.post("/reimbursements", {
         id: 0,
         title: r.author,
         amount: r.amount,
@@ -43,7 +50,7 @@ export async function postNewReimbursement(r: Reimbursement): Promise<any> {
 }
 
 export async function getAllUsers() : Promise<User[]> {
-    const response = await libraryClient.get('/users');
+    const response = await expenseClient.get('/users');
     return response.data.map((userObj: any) => {
         const {user_id, username, password, first_name, last_name, email, role} = userObj;
         return new User(user_id, username, password, first_name, last_name, email, role);
@@ -52,7 +59,7 @@ export async function getAllUsers() : Promise<User[]> {
 
 export async function login(un: string, pw: string) {
     try {
-        const response = await libraryClient.post('/login', {username: un, password: pw});
+        const response = await expenseClient.post('/login', {username: un, password: pw});
         const {user_id, username, password, first_name, last_name, email, role} = response.data;
         return new User(user_id, username, password, first_name, last_name, email, role);
     } catch (e) {

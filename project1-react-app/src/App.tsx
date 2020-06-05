@@ -8,6 +8,7 @@ import { LoginComponent } from './components/LoginComponent';
 import { Redirect } from "react-router-dom"; 
 import { toast, ToastContainer} from 'react-toastify';
 import './index.css';
+import { ReimbByUser } from './components/ReimbByUser';
 // import { Jumbotron } from 'react-strap';
 // import { Example } from './components/NavReactstrap';
 //import ../nodemodule/ (look at reactstrap docs)
@@ -46,7 +47,6 @@ export class App extends React.Component<any, IAppState> {
             logoutUser={this.logoutUser}
             loggedInUser={this.state.loggedInUser}
           />
-            <h1>Welcome to Expense Reimbursements System! (ERS)</h1>
           <Switch>
             {/* This Route redirects people hitting the root url to either home or login, just a QoL thing */}
             <Route exact path="/">
@@ -70,8 +70,8 @@ export class App extends React.Component<any, IAppState> {
               <h2>
                 Welcome{" "}
                 {this.state.loggedInUser
-                  ? `home, ${this.state.loggedInUser.username}!`
-                  : "guest!"}
+                  ? `to ERS Home Page, ${this.state.loggedInUser.username}!`
+                  : "to ERS (Expense Reimbursement System)!"}
               </h2>
             </Route>
               {/* Private route for users to view their own info */}
@@ -83,7 +83,10 @@ export class App extends React.Component<any, IAppState> {
               {(this.state.loggedInUser && this.state.loggedInUser.role === 1) ? <UserTable /> : <h4>Only admins can see all users</h4>}
             </Route>
             <Route path='/reimbursements'>
-              <ReimburseComp reimbursement="If you have questions about submitting reimbursements, please contact the finance department: finance.dept@reimbursement.com"/>
+              <ReimburseComp />
+            </Route>
+            <Route path='/reimbursements/author/userId/user_id'>
+              <ReimbByUser />
             </Route>
             {/* This is a catchall route that redirects the user if they enter a route we dont have */}
             <Route

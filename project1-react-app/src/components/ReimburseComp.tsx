@@ -6,12 +6,12 @@ import { toast } from "react-toastify";
 import { Reimbursement } from "../models/Reimbursement";
 import { NewReimbForm } from "./NewReimbForm";
 
-interface IBookPageState {
+interface IReimburseCompState {
   reimbursements: Reimbursement[];
   reimbursementsLoaded: boolean;
 }
 
-export class ReimburseComp extends React.Component<any, IBookPageState> {
+export class ReimburseComp extends React.Component<any, IReimburseCompState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -52,7 +52,7 @@ export class ReimburseComp extends React.Component<any, IBookPageState> {
             )}
           </Col>
           <Col md={{size: 4}}>
-            {this.props.loggedInUser ? <NewReimbForm addReimbursement={this.addNewReimbursement} /> : <h4>Must login to add reimbursements</h4>}
+            {this.props.loggedInUser ? <NewReimbForm addReimbursement={this.addNewReimbursement} /> : <h4>Must login to view reimbursements</h4>}
           </Col>
         </Row>
       </Container>
