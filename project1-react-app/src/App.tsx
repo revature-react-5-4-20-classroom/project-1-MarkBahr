@@ -13,11 +13,13 @@ import { ReimbByUser } from './components/ReimbByUser';
 // import { Example } from './components/NavReactstrap';
 //import ../nodemodule/ (look at reactstrap docs)
 
+/*
 interface IAppState {
   loggedInUser: User | null;
 }
+*/
 
-export class App extends React.Component<any, IAppState> {
+export class App extends React.Component<any, any> {
 
   constructor(props: any) {
     super(props);

@@ -44,6 +44,10 @@ export async function postNewReimbursement(r: Reimbursement): Promise<any> {
         status: r.status,
         reimbursement_type: r.reimbursement_type
       });
+      return response.data.map((reimbursementObj: any) => {
+        const {id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type} = reimbursementObj;
+        return new Reimbursement(id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type);
+    })
     } catch (e) {
       throw e;
     }
@@ -72,6 +76,3 @@ export async function login(un: string, pw: string) {
         }
     }
 }
-/* The pattern above will serve you well on project 1
-Axios intertprets non-200s responses statuses as errors
-This means you can handle auth problems using try-catch.*/

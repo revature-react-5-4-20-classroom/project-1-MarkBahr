@@ -10,37 +10,16 @@ interface INavbarComponent {
 
 export class NavbarComponent extends React.Component<INavbarComponent> {
   
-  /*
-  Example = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-  
-    const toggle = () => setDropdownOpen(prevState => !prevState);
-  
-    return (
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>
-          Dropdown
-          </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem header>Header</DropdownItem>
-          <DropdownItem>Some Action</DropdownItem>
-          <DropdownItem disabled>Action (disabled)</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>Foo Action</DropdownItem>
-          <DropdownItem>Bar Action</DropdownItem>
-          <DropdownItem>Quo Action</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-    );
-  }
-  */
-  
-    render() {
+   render() {
       return (
       <Nav>
         <NavItem>
           <NavLink to="/home" className="nav-link" activeClassName="active">Home</NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink hidden={!!this.props.loggedInUser} to="/login" className="nav-link" activeClassName="active">Login</NavLink>
+        </NavItem>
+        <NavItem tag={()=>{return <Button  hidden={!this.props.loggedInUser} onClick={this.props.logoutUser} color="secondary" outline>Logout</Button>}} />
         <NavItem>
           <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/users" className="nav-link" activeClassName="active">All Employees</NavLink>
         </NavItem>
@@ -56,10 +35,6 @@ export class NavbarComponent extends React.Component<INavbarComponent> {
         <NavItem>
           <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements/status/status_id" className="nav-link" activeClassName="active">Resolved Reimbursements</NavLink>
         </NavItem>
-        <NavItem>
-          <NavLink hidden={!!this.props.loggedInUser} to="/login" className="nav-link" activeClassName="active">Login</NavLink>
-        </NavItem>
-        <NavItem tag={()=>{return <Button  hidden={!this.props.loggedInUser} onClick={this.props.logoutUser} color="secondary" outline>Logout</Button>}} />
       </Nav>
       )
     }
