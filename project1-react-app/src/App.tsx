@@ -1,5 +1,6 @@
 import React from 'react';
 import { UserTable } from './components/UserTable';
+// import { NewReimbForm } from "./components/NewReimbForm";
 import { ReimburseComp } from './components/ReimburseComp';
 import { NavbarComponent } from './components/NavbarComponent';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -85,7 +86,7 @@ export class App extends React.Component<any, any> {
               {(this.state.loggedInUser && this.state.loggedInUser.role === 1) ? <UserTable /> : <h4>Only admins can see all users</h4>}
             </Route>
             <Route path='/reimbursements'>
-              <ReimburseComp />
+              < ReimburseComp />
             </Route>
             <Route path='/reimbursements/author/userId/user_id'>
               <ReimbByUser />
@@ -98,7 +99,7 @@ export class App extends React.Component<any, any> {
                 return <Redirect to="/" />;
               }}
             ></Route>
-            </Switch>
+          </Switch>
         </Router>
         <ToastContainer /> 
       </div>

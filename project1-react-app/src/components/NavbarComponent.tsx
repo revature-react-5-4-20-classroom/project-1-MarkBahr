@@ -24,7 +24,7 @@ export class NavbarComponent extends React.Component<INavbarComponent> {
           <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/users" className="nav-link" activeClassName="active">All Employees</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements" className="nav-link" activeClassName="active">Reimbursements</NavLink>
+          <NavLink hidden={!(this.props.loggedInUser && (this.props.loggedInUser.role === 1 || 2))} to="/reimbursements" className="nav-link" activeClassName="active">Add Reimbursement</NavLink>
         </NavItem>
         <NavItem>
           <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements/author/userId/user_id" className="nav-link" activeClassName="active">Reimbursements by Employee</NavLink>

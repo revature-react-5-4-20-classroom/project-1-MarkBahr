@@ -53,6 +53,15 @@ export async function postNewReimbursement(r: Reimbursement): Promise<any> {
     }
 }
 
+export async function getReimbursementByStatus(statusId: number) : Promise<Reimbursement[]> {
+    const response = await expenseClient.get(`/reimbursements/status/${statusId}`);
+    // Get an array of reimbursement info back
+    return response.data.map((reimbursementObj: any) => {
+        const {id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type} = reimbursementObj;
+        return new Reimbursement(id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type);
+    })
+}
+
 export async function getAllUsers() : Promise<User[]> {
     const response = await expenseClient.get('/users');
     return response.data.map((userObj: any) => {
@@ -67,7 +76,7 @@ export async function login(un: string, pw: string) {
         const {user_id, username, password, first_name, last_name, email, role} = response.data;
         return new User(user_id, username, password, first_name, last_name, email, role);
     } catch (e) {
-        if(e.resopnse.status === 401) {
+        if(e.response.status === 401) {
             throw new FailedLogin(`Failed to authenticate with username ${un}`);
         } else {
         // We can only send info to the user via alerts or console, since we can't commmunicate with the Dom directly
