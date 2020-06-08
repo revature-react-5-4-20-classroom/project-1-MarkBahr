@@ -26,7 +26,7 @@ export class ReimbByUser extends React.Component<any, IReimbByUserState> {
     await this.fetchReimbursements();
   }
 
-  addNewReimbursement = async () => {
+  getReimbursement = async () => {
     await this.fetchReimbursements();
   }
 
@@ -46,7 +46,7 @@ export class ReimbByUser extends React.Component<any, IReimbByUserState> {
       <>
         <h2>Reimbursements By Employee</h2>
 			  <p>Hint: You can use this page to find Reimbursements entered by a single employee.</p>
-			  <form>
+			  <form onSubmit={this.getReimbursement}>
 				  <label id="userid">Enter Employee ID: </label>
 				  <input type="text" name="userid" id="userid" />
 			  </form>
@@ -61,7 +61,7 @@ export class ReimbByUser extends React.Component<any, IReimbByUserState> {
               )}
             </Col>
             <Col md={{size: 4}}>
-              {this.props.loggedInUser ? <NewReimbForm addReimbursement={this.addNewReimbursement} /> : <h4>Must login to view reimbursements</h4>}
+              {this.props.loggedInUser ? <NewReimbForm addReimbursement={this.getReimbursement} /> : <h4>Reimbursements by user view</h4>}
             </Col>
           </Row>
         </Container>

@@ -85,7 +85,7 @@ export class App extends React.Component<any, any> {
             <Route path="/users">
               {(this.state.loggedInUser && this.state.loggedInUser.role === 1) ? <UserTable /> : <h4>Only admins can see all users</h4>}
             </Route>
-            <Route path='/reimbursements'>
+            <Route exact path='/reimbursements'>
               < ReimburseComp />
             </Route>
             <Route path='/reimbursements/author/userId/user_id'>

@@ -4,7 +4,7 @@ import { Reimbursement } from '../models/Reimbursement';
 import { FailedLogin } from '../errors/FailedLogin';
 
 const expenseClient = axios.create({
-    baseURL: 'http://3.235.223.124:2400',
+    baseURL: 'http://localhost:2400',
     // if you don't have the following line, your Login won't work!
     withCredentials: true, // If you have this line, you'll be fine. 
 })
@@ -53,8 +53,8 @@ export async function postNewReimbursement(r: Reimbursement): Promise<any> {
     }
 }
 
-export async function getReimbursementByStatus(statusId: number) : Promise<Reimbursement[]> {
-    const response = await expenseClient.get(`/reimbursements/status/${statusId}`);
+export async function getReimbursementByStatus(id: number) : Promise<Reimbursement[]> {
+    const response = await expenseClient.get(`/reimbursements/status/${id}`);
     // Get an array of reimbursement info back
     return response.data.map((reimbursementObj: any) => {
         const {id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type} = reimbursementObj;
@@ -62,8 +62,26 @@ export async function getReimbursementByStatus(statusId: number) : Promise<Reimb
     })
 }
 
+export async function updateReimbursement(id: number, statudId: number) : Promise<Reimbursement[]> {
+    const response = await expenseClient.get(`/reimbursements/status/${id}`);
+    // Get an array of reimbursement info back
+    return response.data.map((reimbursementObj: any) => {
+        const {id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type} = reimbursementObj;
+        return new Reimbursement(id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type);
+    });
+}
+
+
 export async function getAllUsers() : Promise<User[]> {
     const response = await expenseClient.get('/users');
+    return response.data.map((userObj: any) => {
+        const {user_id, username, password, first_name, last_name, email, role} = userObj;
+        return new User(user_id, username, password, first_name, last_name, email, role);
+    });
+}
+
+export async function getUser(user_id: number) : Promise<User[]> {
+    const response = await expenseClient.get(`users/${user_id}`);
     return response.data.map((userObj: any) => {
         const {user_id, username, password, first_name, last_name, email, role} = userObj;
         return new User(user_id, username, password, first_name, last_name, email, role);
