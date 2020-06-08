@@ -44,7 +44,7 @@ export class ReimburseComp extends React.Component<any, IReimburseCompState> {
       <Container>
         <Row>
           <Col md={{ size: 8 }}>
-            <h4>Reimbursements</h4>
+            <h4>All Reimbursements</h4>
             {this.state.reimbursementsLoaded ? (
               <MyTable objects={this.state.reimbursements} />
             ) : (

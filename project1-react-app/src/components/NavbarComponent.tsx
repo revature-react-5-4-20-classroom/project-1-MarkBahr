@@ -24,16 +24,16 @@ export class NavbarComponent extends React.Component<INavbarComponent> {
           <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/users" className="nav-link" activeClassName="active">All Employees</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink hidden={!(this.props.loggedInUser && (this.props.loggedInUser.role === 1 || 2))} to="/reimbursements" className="nav-link" activeClassName="active">Add Reimbursement</NavLink>
+          <NavLink hidden={!(this.props.loggedInUser && (this.props.loggedInUser.role === 1 || 2))} to="/reimbursements" className="nav-link" activeClassName="active">All Reimbursements</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements/author/userId/user_id" className="nav-link" activeClassName="active">Reimbursements by Employee</NavLink>
+          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements/author/userId/:user_id" className="nav-link" activeClassName="active">Reimbursements by Employee</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements/status/status_id" className="nav-link" activeClassName="active">Pending Reimbursements</NavLink>
+          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements/status/:statusId" className="nav-link" activeClassName="active">Pending/Resolved Reimbursements</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === 1)} to="/reimbursements/status/status_id" className="nav-link" activeClassName="active">Resolved Reimbursements</NavLink>
+          <NavLink hidden={!(this.props.loggedInUser && this.props.loggedInUser.role === (2 || 3))} to="/users/:user_id" className="nav-link" activeClassName="active">Employee Homepage</NavLink>
         </NavItem>
       </Nav>
       )

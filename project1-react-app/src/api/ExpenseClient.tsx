@@ -4,7 +4,7 @@ import { Reimbursement } from '../models/Reimbursement';
 import { FailedLogin } from '../errors/FailedLogin';
 
 const expenseClient = axios.create({
-    baseURL: 'http://localhost:2400',
+    baseURL: 'http://localhost:2500',
     // if you don't have the following line, your Login won't work!
     withCredentials: true, // If you have this line, you'll be fine. 
 })
@@ -70,7 +70,6 @@ export async function updateReimbursement(id: number, statudId: number) : Promis
         return new Reimbursement(id, author, amount, date_submitted, date_resolved, description, resolver, status, reimbursement_type);
     });
 }
-
 
 export async function getAllUsers() : Promise<User[]> {
     const response = await expenseClient.get('/users');

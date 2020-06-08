@@ -48,7 +48,8 @@ export class ReimbByUser extends React.Component<any, IReimbByUserState> {
 			  <p>Hint: You can use this page to find Reimbursements entered by a single employee.</p>
 			  <form onSubmit={this.getReimbursement}>
 				  <label id="userid">Enter Employee ID: </label>
-				  <input type="text" name="userid" id="userid" />
+				  <input type="number" name="userid" id="userid" />
+          <button onClick={this.getReimbursement}>Submit</button>
 			  </form>
         <Container>
           <Row>

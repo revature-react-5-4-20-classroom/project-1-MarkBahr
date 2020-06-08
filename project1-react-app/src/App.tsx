@@ -10,6 +10,7 @@ import { Redirect } from "react-router-dom";
 import { toast, ToastContainer} from 'react-toastify';
 import './index.css';
 import { ReimbByUser } from './components/ReimbByUser';
+import { ReimbApproval } from './components/ReimbApproval';
 // import { Jumbotron } from 'react-strap';
 // import { Example } from './components/NavReactstrap';
 //import ../nodemodule/ (look at reactstrap docs)
@@ -88,7 +89,10 @@ export class App extends React.Component<any, any> {
             <Route exact path='/reimbursements'>
               < ReimburseComp />
             </Route>
-            <Route path='/reimbursements/author/userId/user_id'>
+            <Route path='/reimbursements/author/userId/:user_id'>
+              <ReimbByUser />
+            </Route>
+            <Route path='/reimbursements/author/status/:statusId'>
               <ReimbByUser />
             </Route>
             {/* This is a catchall route that redirects the user if they enter a route we dont have */}
